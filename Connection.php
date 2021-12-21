@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Taipei');
 
 class Connection
 {
@@ -27,7 +28,7 @@ class Connection
     // 取得筆記
     public function getNotes()
     {
-        $mysqlRequest = "SELECT * FROM notes ORDER BY created_date DESC";
+        $mysqlRequest = "SELECT * FROM notes ORDER BY created_date ASC";
         $statement = $this->pdo->prepare($mysqlRequest);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -60,11 +61,7 @@ class Connection
         $statement = $this->pdo->prepare($mysqlRequest);
         $statement->bindValue('id', $id);
         $statement->execute();
-        return $statement->fetch(PDO::FETCH_ASSOC) ?: [
-            'id' => '',
-            'title' => '',
-            'description' => '',
-        ];
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     // 更新筆記(ID,NOTE)
